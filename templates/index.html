@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>30 Day Decision Journal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center">
+  <div class="max-w-xl w-full mx-auto px-6">
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-10 text-center">
+      <div class="text-5xl mb-4">📓</div>
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">30 Day Decision Journal</h1>
+      <p class="text-gray-500 mb-8">Track decisions. Reflect. Improve.</p>
+
+      <button
+        hx-get="/hello"
+        hx-target="#message"
+        hx-swap="innerHTML"
+        class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-3 rounded-xl transition-colors"
+      >
+        Get Started
+      </button>
+
+      <div id="message" class="mt-6 text-gray-600 text-sm"></div>
+    </div>
+  </div>
+</body>
+</html>
