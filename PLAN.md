@@ -48,11 +48,11 @@
 ## Phase 1 — Firestore Infrastructure
 **Goal**: Firestore connected, health check passes locally and on Cloud Run.
 
-- [ ] Add `google-cloud-firestore==2.19.0` and `pydantic==2.9.2` to `requirements.txt`
-- [ ] Create `db.py` — AsyncClient singleton with `get_firestore_client()` dependency
-- [ ] Update `cloudbuild.yaml` — add `GOOGLE_CLOUD_PROJECT` env var to Cloud Run deploy step
-- [ ] Update `GCP_SETUP.md` — add Firestore API enable + database creation steps
-- [ ] Update `/health` endpoint — verify Firestore connectivity
+- [x] Add `google-cloud-firestore==2.19.0` and `pydantic==2.9.2` to `requirements.txt`
+- [x] Create `db.py` — AsyncClient singleton with `get_firestore_client()` dependency
+- [x] Update `cloudbuild.yaml` — add `GOOGLE_CLOUD_PROJECT` env var to Cloud Run deploy step
+- [x] Update `GCP_SETUP.md` — add Firestore API enable + database creation steps
+- [x] Update `/health` endpoint — verify Firestore connectivity
 - [ ] Enable Firestore API on GCP: `gcloud services enable firestore.googleapis.com`
 - [ ] Create Firestore database: `gcloud firestore databases create --location=us-central1`
 - [ ] Confirm health check passes locally and on Cloud Run

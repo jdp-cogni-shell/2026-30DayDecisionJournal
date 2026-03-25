@@ -23,6 +23,7 @@ steps:
       - '--allow-unauthenticated'
       - '--min-instances=0'
       - '--max-instances=10'
+      - '--set-env-vars=GOOGLE_CLOUD_PROJECT=decision-journal-2026'
 
 substitutions:
   _REGION: us-central1

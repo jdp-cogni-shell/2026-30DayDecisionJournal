@@ -6,7 +6,7 @@ Replace the placeholder values before running each command.
 
 | Variable | Value |
 |---|---|
-| `YOUR_PROJECT_ID` | _(e.g. `decision-journal-2026`)_ |
+| `decision-journal-2026` | _(e.g. `decision-journal-2026`)_ |
 | `BILLING_ACCOUNT_ID` | _(run step 2a to find this)_ |
 
 ---
@@ -30,8 +30,8 @@ gcloud auth login
 ## 1. Create and configure the project
 
 ```bash
-gcloud projects create YOUR_PROJECT_ID --name="30 Day Decision Journal"
-gcloud config set project YOUR_PROJECT_ID
+gcloud projects create decision-journal-2026 --name="30 Day Decision Journal"
+gcloud config set project decision-journal-2026
 ```
 
 ---
@@ -43,7 +43,7 @@ gcloud config set project YOUR_PROJECT_ID
 gcloud billing accounts list
 
 # 2b. Link billing
-gcloud billing projects link YOUR_PROJECT_ID --billing-account=BILLING_ACCOUNT_ID
+gcloud billing projects link decision-journal-2026 --billing-account=BILLING_ACCOUNT_ID
 ```
 
 ---
@@ -73,9 +73,9 @@ gcloud artifacts repositories create decision-journal \
 ## 5. Grant Cloud Build permission to deploy to Cloud Run
 
 ```bash
-PROJECT_NUMBER=$(gcloud projects describe YOUR_PROJECT_ID --format='value(projectNumber)')
+PROJECT_NUMBER=$(gcloud projects describe decision-journal-2026 --format='value(projectNumber)')
 
-gcloud projects add-iam-policy-binding YOUR_PROJECT_ID \
+gcloud projects add-iam-policy-binding decision-journal-2026 \
   --member="serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com" \
   --role="roles/run.admin"
 
@@ -114,3 +114,23 @@ After this completes, Cloud Build will print a Cloud Run URL like:
 `https://decision-journal-xxxx-uc.a.run.app`
 
 Every push to `master` will auto-deploy from this point on.
+
+---
+
+## 8. Enable Firestore and create database
+
+```bash
+gcloud services enable firestore.googleapis.com
+
+gcloud firestore databases create --location=us-central1
+```
+
+---
+
+## 9. Authenticate locally for development
+
+```bash
+gcloud auth application-default login
+```
+
+This allows the app to connect to Firestore when running locally via `uvicorn`.
