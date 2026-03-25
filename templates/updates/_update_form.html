@@ -1,4 +1,4 @@
-<form hx-post="/decisions/{{ decision_id }}/updates"
+<form hx-post="/decisions/{{ decision.id }}/updates"
       hx-target="#update-list"
       hx-swap="beforeend"
       hx-on::after-request="this.reset(); document.getElementById('conf-update-display').textContent = '50%'"
