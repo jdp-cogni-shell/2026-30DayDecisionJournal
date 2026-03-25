@@ -4,7 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from google.cloud.firestore import AsyncClient
 
 from db import get_firestore_client
-from routers import decisions, updates, outcomes
+from routers import decisions, updates, outcomes, analytics
 
 app = FastAPI(title="30 Day Decision Journal")
 
@@ -14,6 +14,7 @@ templates = Jinja2Templates(directory="templates")
 app.include_router(decisions.router)
 app.include_router(updates.router)
 app.include_router(outcomes.router)
+app.include_router(analytics.router)
 
 
 @app.get("/")

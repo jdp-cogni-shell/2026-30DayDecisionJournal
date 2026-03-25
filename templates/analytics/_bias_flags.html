@@ -1,0 +1,55 @@
+<h2 class="font-semibold text-gray-700 mb-4">Bias Flags</h2>
+
+{% set total_flags = stale|length + overconfident|length + anchored|length %}
+
+{% if total_flags == 0 %}
+  <p class="text-sm text-green-600 font-medium">No bias flags detected.</p>
+{% else %}
+
+  {% if stale %}
+  <div class="mb-4">
+    <div class="text-xs font-medium text-yellow-700 uppercase tracking-wide mb-2">
+      Stale Decisions (open &gt; 7 days, no updates)
+    </div>
+    <ul class="space-y-1">
+      {% for d in stale %}
+      <li class="text-sm">
+        <a href="/decisions/{{ d.id }}" class="text-indigo-600 hover:underline">{{ d.title }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if overconfident %}
+  <div class="mb-4">
+    <div class="text-xs font-medium text-red-700 uppercase tracking-wide mb-2">
+      Overconfidence (≥80% confidence, negative outcome)
+    </div>
+    <ul class="space-y-1">
+      {% for o in overconfident %}
+      <li class="text-sm text-gray-700">
+        {{ o.decision_title }}
+        <span class="text-gray-400 ml-1">— {{ o.final_confidence }}% confidence</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if anchored %}
+  <div class="mb-4">
+    <div class="text-xs font-medium text-orange-700 uppercase tracking-wide mb-2">
+      Anchoring (confidence never moved &gt;10 points)
+    </div>
+    <ul class="space-y-1">
+      {% for d in anchored %}
+      <li class="text-sm">
+        <a href="/decisions/{{ d.id }}" class="text-indigo-600 hover:underline">{{ d.title }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+{% endif %}

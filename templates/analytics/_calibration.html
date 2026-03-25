@@ -1,0 +1,47 @@
+<h2 class="font-semibold text-gray-700 mb-4">Calibration</h2>
+
+{% if total == 0 %}
+  <p class="text-sm text-gray-400">No completed decisions yet. Record outcomes to see calibration data.</p>
+{% else %}
+  <div class="flex items-center justify-between mb-4">
+    <span class="text-sm text-gray-500">Based on {{ total }} completed decision{{ 's' if total != 1 }}</span>
+    {% if brier_score is not none %}
+    <div class="text-right">
+      <span class="text-xs text-gray-400">Brier Score</span>
+      <span class="ml-2 text-lg font-bold
+        {% if brier_score < 0.1 %}text-green-600
+        {% elif brier_score < 0.2 %}text-yellow-600
+        {% else %}text-red-600{% endif %}">
+        {{ brier_score }}
+      </span>
+      <span class="text-xs text-gray-400 ml-1">(lower is better, 0.25 = random)</span>
+    </div>
+    {% endif %}
+  </div>
+
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="text-xs text-gray-400 uppercase tracking-wide border-b border-gray-100">
+        <th class="text-left pb-2">Confidence bucket</th>
+        <th class="text-right pb-2">Decisions</th>
+        <th class="text-right pb-2">Actual positive rate</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-50">
+      {% for b in buckets %}
+      <tr class="{% if b.count == 0 %}opacity-30{% endif %}">
+        <td class="py-2 text-gray-700">{{ b.label }}</td>
+        <td class="py-2 text-right text-gray-500">{{ b.count }}</td>
+        <td class="py-2 text-right font-medium
+          {% if b.actual_rate is not none %}
+            {% if b.actual_rate >= 60 %}text-green-600
+            {% elif b.actual_rate >= 40 %}text-yellow-600
+            {% else %}text-red-600{% endif %}
+          {% else %}text-gray-300{% endif %}">
+          {% if b.actual_rate is not none %}{{ b.actual_rate }}%{% else %}—{% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}

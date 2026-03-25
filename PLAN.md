@@ -102,15 +102,15 @@
 ## Phase 5 — Analytics
 **Goal**: Calibration table, bias flags, pre-mortem patterns.
 
-- [ ] Create `routers/analytics.py`
-- [ ] Implement Brier score + calibration bucket table
-- [ ] Implement bias flags: low update frequency, overconfidence, anchoring, confidence drift
-- [ ] Implement pre-mortem word frequency (pure Python, no NLP library)
-- [ ] Create `templates/analytics/dashboard.html` — three HTMX-loaded sections
-- [ ] Create `templates/analytics/_calibration.html` — calibration table partial
-- [ ] Create `templates/analytics/_bias_flags.html` — bias flag cards partial
-- [ ] Add Analytics link to nav in `base.html`
-- [ ] Register analytics router in `main.py`
+- [x] Create `routers/analytics.py`
+- [x] Implement Brier score + calibration bucket table
+- [x] Implement bias flags: low update frequency, overconfidence, anchoring, confidence drift
+- [x] Implement pre-mortem word frequency (pure Python, no NLP library)
+- [x] Create `templates/analytics/dashboard.html` — three HTMX-loaded sections
+- [x] Create `templates/analytics/_calibration.html` — calibration table partial
+- [x] Create `templates/analytics/_bias_flags.html` — bias flag cards partial
+- [x] Add Analytics link to nav in `base.html`
+- [x] Register analytics router in `main.py`
 - [ ] Confirm analytics load with real data from at least one completed decision
 
 ---
