@@ -93,7 +93,7 @@
     <!-- Update items -->
     <div id="update-list">
       {% for update in updates %}
-        {% include "updates/_update_item.html" %}
+        {% include "updates/_update_item.html" with context %}
       {% endfor %}
     </div>
 
