@@ -25,8 +25,7 @@ async def index(request: Request, db: AsyncClient = Depends(get_firestore_client
         "executed": sum(1 for d in all_decisions if d.get("status") == "executed"),
         "abandoned": sum(1 for d in all_decisions if d.get("status") == "abandoned"),
     }
-    return templates.TemplateResponse("index.html", {
-        "request": request,
+    return templates.TemplateResponse(request, "index.html", {
         "decisions": all_decisions,
         "counts": counts,
     })

@@ -95,7 +95,7 @@
 - [x] Show outcome section on detail page if `status == executed`; show "Record Outcome" button if open
 - [x] Block editing executed decisions (server-side 403 + hide Edit link in template)
 - [x] Register outcomes router in `main.py`
-- [ ] Confirm full lifecycle: create → update → record outcome → view post-mortem
+- [x] Confirm full lifecycle: create → update → record outcome → view post-mortem
 
 ---
 

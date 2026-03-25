@@ -18,14 +18,11 @@ async def new_outcome(
 ):
     doc = await db.collection("decisions").document(decision_id).get()
     if not doc.exists:
-        return templates.TemplateResponse("404.html", {"request": request}, status_code=404)
+        return templates.TemplateResponse(request, "404.html", status_code=404)
     decision = {"id": doc.id, **doc.to_dict()}
     if decision.get("status") != "open":
         return RedirectResponse(url=f"/decisions/{decision_id}", status_code=303)
-    return templates.TemplateResponse("outcomes/new.html", {
-        "request": request,
-        "decision": decision,
-    })
+    return templates.TemplateResponse(request, "outcomes/new.html", {"decision": decision})
 
 
 @router.post("")
@@ -41,7 +38,7 @@ async def create_outcome(
     doc_ref = db.collection("decisions").document(decision_id)
     doc = await doc_ref.get()
     if not doc.exists:
-        return templates.TemplateResponse("404.html", {"request": request}, status_code=404)
+        return templates.TemplateResponse(request, "404.html", status_code=404)
     if doc.to_dict().get("status") != "open":
         return RedirectResponse(url=f"/decisions/{decision_id}", status_code=303)
 

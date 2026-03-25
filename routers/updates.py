@@ -39,7 +39,4 @@ async def add_update(
         "confidence_rationale": confidence_rationale,
         "created_at": ts,
     }
-    return templates.TemplateResponse(
-        "updates/_update_item.html",
-        {"request": request, "update": update},
-    )
+    return templates.TemplateResponse(request, "updates/_update_item.html", {"update": update})

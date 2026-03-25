@@ -16,7 +16,7 @@ def now():
 
 @router.get("/new")
 async def new_decision(request: Request):
-    return templates.TemplateResponse("decisions/new.html", {"request": request})
+    return templates.TemplateResponse(request, "decisions/new.html")
 
 
 @router.post("")
@@ -63,20 +63,18 @@ async def get_decision(
 ):
     doc = await db.collection("decisions").document(decision_id).get()
     if not doc.exists:
-        return templates.TemplateResponse("404.html", {"request": request}, status_code=404)
+        return templates.TemplateResponse(request, "404.html", status_code=404)
     decision = {"id": doc.id, **doc.to_dict()}
     update_docs = await db.collection("decisions").document(decision_id).collection("updates").order_by("created_at").get()
     updates = [{"id": u.id, **u.to_dict()} for u in update_docs]
 
-    # Fetch outcome if executed
     outcome = None
     if decision.get("status") == "executed":
         outcome_docs = await db.collection("outcomes").where("decision_id", "==", decision_id).limit(1).get()
         if outcome_docs:
             outcome = {"id": outcome_docs[0].id, **outcome_docs[0].to_dict()}
 
-    return templates.TemplateResponse("decisions/detail.html", {
-        "request": request,
+    return templates.TemplateResponse(request, "decisions/detail.html", {
         "decision": decision,
         "outcome": outcome,
         "updates": updates,
@@ -91,9 +89,9 @@ async def edit_decision(
 ):
     doc = await db.collection("decisions").document(decision_id).get()
     if not doc.exists:
-        return templates.TemplateResponse("404.html", {"request": request}, status_code=404)
+        return templates.TemplateResponse(request, "404.html", status_code=404)
     decision = {"id": doc.id, **doc.to_dict()}
-    return templates.TemplateResponse("decisions/edit.html", {"request": request, "decision": decision})
+    return templates.TemplateResponse(request, "decisions/edit.html", {"decision": decision})
 
 
 @router.post("/{decision_id}/edit")
@@ -115,7 +113,7 @@ async def update_decision(
     doc_ref = db.collection("decisions").document(decision_id)
     doc = await doc_ref.get()
     if not doc.exists:
-        return templates.TemplateResponse("404.html", {"request": request}, status_code=404)
+        return templates.TemplateResponse(request, "404.html", status_code=404)
     if doc.to_dict().get("status") != "open":
         return RedirectResponse(url=f"/decisions/{decision_id}", status_code=303)
     tag_list = [t.strip() for t in tags.split(",") if t.strip()]
