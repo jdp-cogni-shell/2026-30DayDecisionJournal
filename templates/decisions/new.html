@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}New Decision — Decision Journal{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl">
+  <h1 class="text-2xl font-bold text-gray-900 mb-8">New Decision</h1>
+
+  <form method="post" action="/decisions" class="space-y-8">
+
+    <!-- Core -->
+    <div class="bg-white border border-gray-200 rounded-xl p-6 space-y-4">
+      <h2 class="font-semibold text-gray-700">The Decision</h2>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Title <span class="text-red-500">*</span></label>
+        <input type="text" name="title" required
+               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+               placeholder="e.g. Accept job offer at Acme">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+        <textarea name="description" rows="3"
+                  class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  placeholder="What's the full context of this decision?"></textarea>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">
+          Confidence Level: <span id="conf-display" class="text-indigo-600 font-semibold">50%</span>
+        </label>
+        <input type="range" name="confidence_initial" min="0" max="100" value="50"
+               oninput="document.getElementById('conf-display').textContent = this.value + '%'"
+               class="w-full accent-indigo-600">
+        <div class="flex justify-between text-xs text-gray-400 mt-1">
+          <span>0% — No confidence</span>
+          <span>100% — Certain</span>
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Tags</label>
+        <input type="text" name="tags"
+               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+               placeholder="career, finance, health (comma-separated)">
+      </div>
+    </div>
+
+    <!-- Evidence Map -->
+    <div class="bg-white border border-gray-200 rounded-xl p-6 space-y-4">
+      <h2 class="font-semibold text-gray-700">Evidence Map</h2>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">What do you know?</label>
+        <textarea name="evidence_known" rows="3"
+                  class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  placeholder="Facts and data you currently have..."></textarea>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">What don't you know yet?</label>
+        <textarea name="evidence_unknown" rows="3"
+                  class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  placeholder="Key unknowns or gaps in your information..."></textarea>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">What evidence would change your confidence?</label>
+        <textarea name="evidence_would_change" rows="3"
+                  class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  placeholder="What specific data or events would shift your confidence up or down?"></textarea>
+      </div>
+    </div>
+
+    <!-- Pre-mortem -->
+    <div class="bg-white border border-gray-200 rounded-xl p-6 space-y-4">
+      <h2 class="font-semibold text-gray-700">Pre-Mortem</h2>
+      <p class="text-sm text-gray-500">Write 3 distinct reasons why this decision could be wrong.</p>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Reason 1</label>
+        <textarea name="premortem_reason_1" rows="2"
+                  class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Reason 2</label>
+        <textarea name="premortem_reason_2" rows="2"
+                  class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Reason 3</label>
+        <textarea name="premortem_reason_3" rows="2"
+                  class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+      </div>
+    </div>
+
+    <div class="flex gap-3">
+      <button type="submit"
+              class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-2.5 rounded-lg transition-colors">
+        Save Decision
+      </button>
+      <a href="/" class="text-sm text-gray-500 hover:text-gray-700 px-4 py-2.5">Cancel</a>
+    </div>
+
+  </form>
+</div>
+{% endblock %}

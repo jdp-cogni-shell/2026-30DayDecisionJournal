@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}{{ decision.title }} — Decision Journal{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl">
+
+  <!-- Header -->
+  <div class="flex items-start justify-between mb-6">
+    <div>
+      <a href="/" class="text-sm text-gray-400 hover:text-gray-600">← Dashboard</a>
+      <h1 class="text-2xl font-bold text-gray-900 mt-2">{{ decision.title }}</h1>
+      {% if decision.description %}
+      <p class="text-gray-500 mt-1">{{ decision.description }}</p>
+      {% endif %}
+      {% if decision.tags %}
+      <div class="flex gap-1 mt-2 flex-wrap">
+        {% for tag in decision.tags %}
+        <span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{{ tag }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    <div class="flex flex-col items-end gap-2 ml-4 shrink-0">
+      <span class="text-xs font-medium px-2 py-1 rounded-full
+        {% if decision.status == 'open' %}bg-indigo-100 text-indigo-700
+        {% elif decision.status == 'executed' %}bg-green-100 text-green-700
+        {% else %}bg-gray-100 text-gray-500{% endif %}">
+        {{ decision.status }}
+      </span>
+      {% if decision.status == 'open' %}
+      <a href="/decisions/{{ decision.id }}/edit"
+         class="text-xs text-gray-400 hover:text-gray-600">Edit</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Confidence -->
+  <div class="bg-white border border-gray-200 rounded-xl p-6 mb-4">
+    <div class="flex items-center justify-between">
+      <span class="text-sm font-medium text-gray-700">Initial Confidence</span>
+      <span class="text-2xl font-bold text-indigo-600">{{ decision.confidence_initial }}%</span>
+    </div>
+  </div>
+
+  <!-- Evidence Map -->
+  <div class="bg-white border border-gray-200 rounded-xl p-6 mb-4 space-y-4">
+    <h2 class="font-semibold text-gray-700">Evidence Map</h2>
+    <div>
+      <div class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">What you know</div>
+      <p class="text-sm text-gray-700">{{ decision.evidence_known or "—" }}</p>
+    </div>
+    <div>
+      <div class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">What you don't know</div>
+      <p class="text-sm text-gray-700">{{ decision.evidence_unknown or "—" }}</p>
+    </div>
+    <div>
+      <div class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">What would change your confidence</div>
+      <p class="text-sm text-gray-700">{{ decision.evidence_would_change or "—" }}</p>
+    </div>
+  </div>
+
+  <!-- Pre-mortem -->
+  <div class="bg-white border border-gray-200 rounded-xl p-6 mb-4 space-y-3">
+    <h2 class="font-semibold text-gray-700">Pre-Mortem</h2>
+    {% for reason in [decision.premortem_reason_1, decision.premortem_reason_2, decision.premortem_reason_3] %}
+    {% if reason %}
+    <div class="flex gap-3">
+      <span class="text-red-400 mt-0.5">✕</span>
+      <p class="text-sm text-gray-700">{{ reason }}</p>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+
+  <!-- Updates placeholder (Phase 3) -->
+  <div class="bg-white border border-gray-200 rounded-xl p-6 mb-4">
+    <h2 class="font-semibold text-gray-700 mb-3">Updates</h2>
+    <p class="text-sm text-gray-400">Update tracking coming in Phase 3.</p>
+  </div>
+
+  <!-- Outcome CTA -->
+  {% if decision.status == 'open' %}
+  <div class="mt-6">
+    <a href="/decisions/{{ decision.id }}/outcome/new"
+       class="inline-block bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition-colors">
+      Record Outcome
+    </a>
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}

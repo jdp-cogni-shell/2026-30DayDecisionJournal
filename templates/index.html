@@ -1,30 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>30 Day Decision Journal</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/htmx.org@1.9.12"></script>
-</head>
-<body class="bg-gray-50 min-h-screen flex items-center justify-center">
-  <div class="max-w-xl w-full mx-auto px-6">
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-10 text-center">
-      <div class="text-5xl mb-4">📓</div>
-      <h1 class="text-3xl font-bold text-gray-900 mb-2">30 Day Decision Journal</h1>
-      <p class="text-gray-500 mb-8">Track decisions. Reflect. Improve.</p>
+{% extends "base.html" %}
+{% block title %}Dashboard — Decision Journal{% endblock %}
 
-      <button
-        hx-get="/hello"
-        hx-target="#message"
-        hx-swap="innerHTML"
-        class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-3 rounded-xl transition-colors"
-      >
-        Get Started
-      </button>
+{% block content %}
+<div class="flex items-center justify-between mb-8">
+  <h1 class="text-2xl font-bold text-gray-900">Your Decisions</h1>
+  <a href="/decisions/new"
+     class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
+    + New Decision
+  </a>
+</div>
 
-      <div id="message" class="mt-6 text-gray-600 text-sm"></div>
+{% if decisions %}
+  <!-- Summary bar -->
+  <div class="grid grid-cols-3 gap-4 mb-8">
+    <div class="bg-white border border-gray-200 rounded-xl p-4 text-center">
+      <div class="text-2xl font-bold text-indigo-600">{{ counts.open }}</div>
+      <div class="text-xs text-gray-500 mt-1">Open</div>
+    </div>
+    <div class="bg-white border border-gray-200 rounded-xl p-4 text-center">
+      <div class="text-2xl font-bold text-green-600">{{ counts.executed }}</div>
+      <div class="text-xs text-gray-500 mt-1">Executed</div>
+    </div>
+    <div class="bg-white border border-gray-200 rounded-xl p-4 text-center">
+      <div class="text-2xl font-bold text-gray-400">{{ counts.abandoned }}</div>
+      <div class="text-xs text-gray-500 mt-1">Abandoned</div>
     </div>
   </div>
-</body>
-</html>
+
+  <!-- Decision cards -->
+  <div class="space-y-3">
+    {% for d in decisions %}
+    <a href="/decisions/{{ d.id }}"
+       class="block bg-white border border-gray-200 rounded-xl p-5 hover:border-indigo-300 hover:shadow-sm transition-all">
+      <div class="flex items-start justify-between">
+        <div>
+          <div class="font-medium text-gray-900">{{ d.title }}</div>
+          {% if d.description %}
+          <div class="text-sm text-gray-500 mt-1 line-clamp-1">{{ d.description }}</div>
+          {% endif %}
+          {% if d.tags %}
+          <div class="flex gap-1 mt-2 flex-wrap">
+            {% for tag in d.tags %}
+            <span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{{ tag }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+        <div class="flex flex-col items-end gap-2 ml-4 shrink-0">
+          <span class="text-xs font-medium px-2 py-1 rounded-full
+            {% if d.status == 'open' %}bg-indigo-100 text-indigo-700
+            {% elif d.status == 'executed' %}bg-green-100 text-green-700
+            {% else %}bg-gray-100 text-gray-500{% endif %}">
+            {{ d.status }}
+          </span>
+          <span class="text-sm font-semibold text-gray-700">{{ d.confidence_initial }}%</span>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+
+{% else %}
+  <div class="text-center py-20 text-gray-400">
+    <div class="text-5xl mb-4">📓</div>
+    <p class="text-lg font-medium text-gray-600">No decisions yet</p>
+    <p class="text-sm mt-1 mb-6">Start tracking your first major decision</p>
+    <a href="/decisions/new"
+       class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition-colors">
+      New Decision
+    </a>
+  </div>
+{% endif %}
+{% endblock %}

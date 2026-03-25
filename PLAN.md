@@ -53,23 +53,23 @@
 - [x] Update `cloudbuild.yaml` — add `GOOGLE_CLOUD_PROJECT` env var to Cloud Run deploy step
 - [x] Update `GCP_SETUP.md` — add Firestore API enable + database creation steps
 - [x] Update `/health` endpoint — verify Firestore connectivity
-- [ ] Enable Firestore API on GCP: `gcloud services enable firestore.googleapis.com`
-- [ ] Create Firestore database: `gcloud firestore databases create --location=us-central1`
-- [ ] Confirm health check passes locally and on Cloud Run
+- [x] Enable Firestore API on GCP: `gcloud services enable firestore.googleapis.com`
+- [x] Create Firestore database: `gcloud firestore databases create --location=us-central1`
+- [x] Confirm health check passes locally and on Cloud Run
 
 ---
 
 ## Phase 2 — Core CRUD: Decisions
 **Goal**: Create, view, list, and edit decisions.
 
-- [ ] Create `models.py` — `DecisionCreate`, `DecisionRead`, `DecisionUpdate` Pydantic models
-- [ ] Create `routers/decisions.py` — 6 decision routes
-- [ ] Create `templates/base.html` — layout shell (nav, Tailwind CDN, HTMX CDN, content block)
-- [ ] Update `templates/index.html` — dashboard with decision card list
-- [ ] Create `templates/decisions/new.html` — full entry form with confidence slider
-- [ ] Create `templates/decisions/detail.html` — read-only decision view
-- [ ] Create `templates/decisions/edit.html` — pre-populated edit form
-- [ ] Register decisions router in `main.py`
+- [x] Create `models.py` — `DecisionCreate`, `DecisionRead`, `DecisionUpdate` Pydantic models
+- [x] Create `routers/decisions.py` — 6 decision routes
+- [x] Create `templates/base.html` — layout shell (nav, Tailwind CDN, HTMX CDN, content block)
+- [x] Update `templates/index.html` — dashboard with decision card list
+- [x] Create `templates/decisions/new.html` — full entry form with confidence slider
+- [x] Create `templates/decisions/detail.html` — read-only decision view
+- [x] Create `templates/decisions/edit.html` — pre-populated edit form
+- [x] Register decisions router in `main.py`
 - [ ] Confirm full round-trip: create → dashboard → detail → edit
 
 ---
