@@ -65,7 +65,13 @@ async def get_decision(
     if not doc.exists:
         return templates.TemplateResponse("404.html", {"request": request}, status_code=404)
     decision = {"id": doc.id, **doc.to_dict()}
-    return templates.TemplateResponse("decisions/detail.html", {"request": request, "decision": decision})
+    update_docs = await db.collection("decisions").document(decision_id).collection("updates").order_by("created_at").get()
+    updates = [{"id": u.id, **u.to_dict()} for u in update_docs]
+    return templates.TemplateResponse("decisions/detail.html", {
+        "request": request,
+        "decision": decision,
+        "updates": updates,
+    })
 
 
 @router.get("/{decision_id}/edit")

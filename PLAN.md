@@ -70,18 +70,18 @@
 - [x] Create `templates/decisions/detail.html` — read-only decision view
 - [x] Create `templates/decisions/edit.html` — pre-populated edit form
 - [x] Register decisions router in `main.py`
-- [ ] Confirm full round-trip: create → dashboard → detail → edit
+- [x] Confirm full round-trip: create → dashboard → detail → edit
 
 ---
 
 ## Phase 3 — Update Events
 **Goal**: Add and view information updates inline without page reload.
 
-- [ ] Create `routers/updates.py`
-- [ ] Create `templates/updates/_update_item.html` — HTMX partial: single update row
-- [ ] Create `templates/updates/_update_form.html` — HTMX partial: inline add form
-- [ ] Wire HTMX in `decisions/detail.html` — POST to `/decisions/{id}/updates`, swap `beforeend` into `#update-list`
-- [ ] Register updates router in `main.py`
+- [x] Create `routers/updates.py`
+- [x] Create `templates/updates/_update_item.html` — HTMX partial: single update row
+- [x] Create `templates/updates/_update_form.html` — HTMX partial: inline add form
+- [x] Wire HTMX in `decisions/detail.html` — POST to `/decisions/{id}/updates`, swap `beforeend` into `#update-list`
+- [x] Register updates router in `main.py`
 - [ ] Confirm: add 3 updates inline, confidence timeline updates without page reload
 
 ---

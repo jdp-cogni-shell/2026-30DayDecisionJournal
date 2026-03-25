@@ -72,10 +72,36 @@
     {% endfor %}
   </div>
 
-  <!-- Updates placeholder (Phase 3) -->
+  <!-- Updates -->
   <div class="bg-white border border-gray-200 rounded-xl p-6 mb-4">
-    <h2 class="font-semibold text-gray-700 mb-3">Updates</h2>
-    <p class="text-sm text-gray-400">Update tracking coming in Phase 3.</p>
+    <h2 class="font-semibold text-gray-700 mb-3">Confidence Timeline</h2>
+
+    <!-- Initial confidence row -->
+    <div class="flex gap-4 py-4 border-t border-gray-100">
+      <div class="flex flex-col items-center">
+        <div class="w-2 h-2 rounded-full bg-gray-300 mt-1.5"></div>
+        <div class="w-px flex-1 bg-gray-200 mt-1"></div>
+      </div>
+      <div class="flex-1 pb-2">
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-gray-400">Initial · at time of decision</span>
+          <span class="text-sm font-bold text-gray-500">{{ decision.confidence_initial }}%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Update items -->
+    <div id="update-list">
+      {% for update in updates %}
+        {% include "updates/_update_item.html" %}
+      {% endfor %}
+    </div>
+
+    {% if decision.status == 'open' %}
+    <!-- Add update form -->
+    {% include "updates/_update_form.html" with context %}
+    {% endif %}
+
   </div>
 
   <!-- Outcome CTA -->
