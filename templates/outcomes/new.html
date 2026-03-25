@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Record Outcome — Decision Journal{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl">
+  <a href="/decisions/{{ decision.id }}" class="text-sm text-gray-400 hover:text-gray-600">← Back to decision</a>
+  <h1 class="text-2xl font-bold text-gray-900 mt-2 mb-1">Record Outcome</h1>
+  <p class="text-gray-500 mb-8">{{ decision.title }}</p>
+
+  <form method="post" action="/decisions/{{ decision.id }}/outcome" class="space-y-6">
+
+    <div class="bg-white border border-gray-200 rounded-xl p-6 space-y-4">
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Implementation Date <span class="text-red-500">*</span></label>
+        <input type="date" name="implementation_date" required
+               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Outcome <span class="text-red-500">*</span></label>
+        <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
+          {% for valence, label, color in [
+            ("positive", "Positive", "green"),
+            ("negative", "Negative", "red"),
+            ("mixed", "Mixed", "yellow"),
+            ("unknown", "Unknown", "gray")
+          ] %}
+          <label class="flex items-center justify-center border-2 rounded-lg px-3 py-2 cursor-pointer text-sm font-medium
+            border-gray-200 hover:border-{{ color }}-400 has-[:checked]:border-{{ color }}-500 has-[:checked]:bg-{{ color }}-50 has-[:checked]:text-{{ color }}-700">
+            <input type="radio" name="outcome_valence" value="{{ valence }}" required class="sr-only">
+            {{ label }}
+          </label>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">What actually happened? <span class="text-red-500">*</span></label>
+        <textarea name="actual_result" required rows="4"
+                  class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  placeholder="Describe the actual result..."></textarea>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Post-mortem notes</label>
+        <textarea name="postmortem_notes" rows="3"
+                  class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  placeholder="Reflections — what did you get right or wrong? What would you do differently?"></textarea>
+      </div>
+
+    </div>
+
+    <div class="flex gap-3">
+      <button type="submit"
+              class="bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-2.5 rounded-lg transition-colors">
+        Close Decision
+      </button>
+      <a href="/decisions/{{ decision.id }}" class="text-sm text-gray-500 hover:text-gray-700 px-4 py-2.5">Cancel</a>
+    </div>
+
+  </form>
+</div>
+{% endblock %}

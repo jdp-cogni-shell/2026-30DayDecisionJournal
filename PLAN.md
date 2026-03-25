@@ -82,20 +82,19 @@
 - [x] Create `templates/updates/_update_form.html` — HTMX partial: inline add form
 - [x] Wire HTMX in `decisions/detail.html` — POST to `/decisions/{id}/updates`, swap `beforeend` into `#update-list`
 - [x] Register updates router in `main.py`
-- [ ] Confirm: add 3 updates inline, confidence timeline updates without page reload
+- [x] Confirm: add 3 updates inline, confidence timeline updates without page reload
 
 ---
 
 ## Phase 4 — Outcomes
 **Goal**: Record execution outcomes and close the decision loop.
 
-- [ ] Create `routers/outcomes.py`
-- [ ] Create `templates/outcomes/new.html` — outcome form
-- [ ] Create `templates/outcomes/detail.html` — outcome + post-mortem view
-- [ ] On POST outcome: write to `outcomes` collection, update decision `status` to `executed`, denormalize `final_confidence`
-- [ ] Show outcome section on detail page if `status == executed`; show "Record Outcome" button if open
-- [ ] Block editing executed decisions (server-side 403 + hide Edit link in template)
-- [ ] Register outcomes router in `main.py`
+- [x] Create `routers/outcomes.py`
+- [x] Create `templates/outcomes/new.html` — outcome form
+- [x] On POST outcome: write to `outcomes` collection, update decision `status` to `executed`, denormalize `final_confidence`
+- [x] Show outcome section on detail page if `status == executed`; show "Record Outcome" button if open
+- [x] Block editing executed decisions (server-side 403 + hide Edit link in template)
+- [x] Register outcomes router in `main.py`
 - [ ] Confirm full lifecycle: create → update → record outcome → view post-mortem
 
 ---

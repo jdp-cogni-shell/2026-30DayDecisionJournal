@@ -67,9 +67,18 @@ async def get_decision(
     decision = {"id": doc.id, **doc.to_dict()}
     update_docs = await db.collection("decisions").document(decision_id).collection("updates").order_by("created_at").get()
     updates = [{"id": u.id, **u.to_dict()} for u in update_docs]
+
+    # Fetch outcome if executed
+    outcome = None
+    if decision.get("status") == "executed":
+        outcome_docs = await db.collection("outcomes").where("decision_id", "==", decision_id).limit(1).get()
+        if outcome_docs:
+            outcome = {"id": outcome_docs[0].id, **outcome_docs[0].to_dict()}
+
     return templates.TemplateResponse("decisions/detail.html", {
         "request": request,
         "decision": decision,
+        "outcome": outcome,
         "updates": updates,
     })
 

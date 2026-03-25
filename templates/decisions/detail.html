@@ -104,8 +104,39 @@
 
   </div>
 
-  <!-- Outcome CTA -->
-  {% if decision.status == 'open' %}
+  <!-- Outcome -->
+  {% if outcome %}
+  <div class="bg-white border border-gray-200 rounded-xl p-6 mb-4 space-y-4">
+    <div class="flex items-center justify-between">
+      <h2 class="font-semibold text-gray-700">Outcome</h2>
+      <span class="text-xs font-medium px-2 py-1 rounded-full
+        {% if outcome.outcome_valence == 'positive' %}bg-green-100 text-green-700
+        {% elif outcome.outcome_valence == 'negative' %}bg-red-100 text-red-700
+        {% elif outcome.outcome_valence == 'mixed' %}bg-yellow-100 text-yellow-700
+        {% else %}bg-gray-100 text-gray-500{% endif %}">
+        {{ outcome.outcome_valence | title }}
+      </span>
+    </div>
+    <div>
+      <div class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">Implemented</div>
+      <p class="text-sm text-gray-700">{{ outcome.implementation_date }}</p>
+    </div>
+    <div>
+      <div class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">What happened</div>
+      <p class="text-sm text-gray-700">{{ outcome.actual_result }}</p>
+    </div>
+    {% if outcome.postmortem_notes %}
+    <div>
+      <div class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">Post-mortem</div>
+      <p class="text-sm text-gray-700">{{ outcome.postmortem_notes }}</p>
+    </div>
+    {% endif %}
+    <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+      <span class="text-xs text-gray-400">Final confidence</span>
+      <span class="text-sm font-bold text-gray-600">{{ outcome.final_confidence }}%</span>
+    </div>
+  </div>
+  {% elif decision.status == 'open' %}
   <div class="mt-6">
     <a href="/decisions/{{ decision.id }}/outcome/new"
        class="inline-block bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition-colors">
